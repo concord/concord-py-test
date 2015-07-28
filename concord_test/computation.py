@@ -21,7 +21,7 @@ logger.setLevel(logging.DEBUG)
 class ZookeeperContext:
 
     def __init__(self, zookeeper_url, test_id, node_id):
-        self.assertNotNone(zookeepr_url)
+        self.assertNotNone(zookeeper_url)
         self.assertNotNone(test_id)
         self.assertNotNone(node_id)
 

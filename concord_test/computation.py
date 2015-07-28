@@ -1,3 +1,4 @@
+import os
 import pickle
 from kazoo.client import KazooClient
 from kazoo.exceptions import (
@@ -19,18 +20,15 @@ logger.setLevel(logging.DEBUG)
 
 class ZookeeperContext:
 
-    def __init__(self, computation_name, zookeeper_url, test_id, node_id):
-        self.assertNotNone(computation_name)
+    def __init__(self, zookeeper_url, test_id, node_id):
         self.assertNotNone(zookeepr_url)
         self.assertNotNone(test_id)
         self.assertNotNone(node_id)
 
-        self.computation_name = computation_name
         self.zookeeper_url = zookeeper_url
         self.test_id = test_id
         self.node_id = node_id
-        self.zk_path = '/bolt/testing/%s/%s/%s' % (
-            self.test_id, self.computation_name, self.node_id)
+        self.zk_path = '/bolt/testing/%s/%s' % (self.test_id, self.node_id)
         logger.info("Initialized decorator: ", self)
         self.__connect_zookeeper()
 
@@ -43,7 +41,7 @@ class ZookeeperContext:
             logger.info('Attempting to connect to: %s' % self.zookeeper_url)
             self.zk = KazooClient(hosts=self.zookeeper_url)
             self.zk.start(timeout=10)
-            logger.info('Zookeeper: ', self.zk)
+            logger.info('initialized zookeeper')
         except Exception as exception:
             logger.error('Failed to connect to zk')
             logger.fatal(exception)

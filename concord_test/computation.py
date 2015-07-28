@@ -17,12 +17,13 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 
-class ConcordDecorator:
+class ZookeeperContext:
+
     def __init__(self, computation_name, zookeeper_url, test_id, node_id):
-        assert(computation_name != None)
-        assert(zookeepr_url != None)
-        assert(test_id != None)
-        assert(node_id != None)
+        assertNotNone(computation_name)
+        assertNotNone(zookeepr_url)
+        assertNotNone(test_id)
+        assertNotNone(node_id)
 
         self.computation_name = computation_name
         self.zookeeper_url = zookeeper_url
@@ -33,6 +34,9 @@ class ConcordDecorator:
         logger.info("Initialized decorator: ", self)
         self.__connect_zookeeper()
 
+    def assertNotNone(thing):
+        if thing == None:
+            logger.fatal("Invalid key in initializer")
 
     def __connect_zookeeper(self):
         try:
@@ -52,37 +56,43 @@ class ConcordDecorator:
         self.zk.stop()
 
     def publish(self, key, data):
-        assert(key != None)
-        assert(data != None)
+        assertNotNone(key)
+        assertNotNone(data)
+
         path = self.zk_path + "/" + key
         logger.info("Creating data in: %s", path)
         try:
+            bytes = pickle.dumps(data);
             if not self.zk.exists(path):
                 logger.info("Path does not exist in zk, creating... %s", path)
-                self.zk.create(path, makepath=True)
+                self.zk.create(path, value=bytes,  makepath=True)
+            else:
+                self.zk.set(path, value=bytes)
 
-            self.zk.set(path, value=picke.dumps(data))
         except Exception as exception:
             logger.error('Error setting data in ' % path)
             logger.fatal(exception)
 
 
-def tryGetEnv(key):
-    try:
-        return os.environ[key]
-    except Exception as e:
-        logger.error('Error getting os.environ[%s]' % key)
-        logger.fatal(exception)
+
 
 def serve_test_computation(handler):
     logger.info("About to serve computation and service")
+
+    def tryGetEnv(key):
+        try:
+            return os.environ[key]
+        except Exception as e:
+            logger.error('Error getting os.environ[%s]' % key)
+            logger.fatal(exception)
+
     zookeeper_url = tryGetEnv('integration_test_zookeeper_url')
     test_id = tryGetEnv('integration_test_id')
     node_id = tryGetEnv('integration_test_node_id')
 
-    handler.__concord = ConcordDecorator(handler.metadata().name,
-                                         zookeeper_url,
-                                         test_id,
-                                         node_id)
+
+    handler.__concord = class ZookeeperContext(zookeeper_url,
+                                               test_id,
+                                               node_id)
     logger.info("Defering further init: concord.computation.serve_computation")
     serve_computation(handler)

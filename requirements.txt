@@ -1,4 +1,4 @@
--e git+https://github.com/concord/concord-py@1c16926cbd842f35f4103ce58b48d19e230cc0cb#egg=concord_py
+-e git+https://github.com/concord/concord-py#egg=concord_py
 six==1.9.0
 thrift==0.9.2
 Twisted==14.0.2

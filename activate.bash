@@ -1,5 +1,4 @@
 #!/bin/bash --login
-set -ex
 if [[ "$(which virtualenv)" == "" ]]; then
     if [[  "$(which apt-get)" != "" ]]; then
         echo "INSTALLING TOOLS: "
@@ -8,5 +7,7 @@ if [[ "$(which virtualenv)" == "" ]]; then
         sudo pip install virtualenv
     fi
 fi
-
-/usr/local/bin/virtualenv env
+if [[ ! -d env ]]; then
+    /usr/local/bin/virtualenv env
+fi
+source env/bin/activate

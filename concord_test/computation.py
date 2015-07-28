@@ -29,7 +29,7 @@ class ZookeeperContext:
         self.test_id = test_id
         self.node_id = node_id
         self.zk_path = '/bolt/testing/%s/%s' % (self.test_id, self.node_id)
-        logger.info("Initialized decorator: ", self)
+        logger.info("Initialized decorator: %s " % self.__str__())
         self.__connect_zookeeper()
 
     def assertNotNone(self,thing):
@@ -58,11 +58,11 @@ class ZookeeperContext:
         self.assertNotNone(data)
 
         path = self.zk_path + "/" + key
-        logger.info("Creating data in: %s", path)
+        logger.info("Creating data in: %s" % path)
         try:
             bytes = pickle.dumps(data);
             if not self.zk.exists(path):
-                logger.info("Path does not exist in zk, creating... %s", path)
+                logger.info("Path does not exist in zk, creating... %s" % path)
                 self.zk.create(path, value=bytes,  makepath=True)
             else:
                 self.zk.set(path, value=bytes)

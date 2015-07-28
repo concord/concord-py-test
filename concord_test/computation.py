@@ -54,7 +54,7 @@ class ConcordDecorator:
     def publish(self, key, data):
         assert(key != None)
         assert(data != None)
-        path = self.zk_path + "/%s" + key
+        path = self.zk_path + "/" + key
         logger.info("Creating data in: %s", path)
         try:
             if not self.zk.exists(path):

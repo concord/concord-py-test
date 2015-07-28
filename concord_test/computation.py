@@ -84,7 +84,7 @@ def serve_test_computation(handler):
             return os.environ[key]
         except Exception as e:
             logger.error('Error getting os.environ[%s]' % key)
-            logger.fatal(exception)
+            logger.fatal(e)
 
     zookeeper_url = tryGetEnv('integration_test_zookeeper_url')
     test_id = tryGetEnv('integration_test_id')

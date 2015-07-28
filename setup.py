@@ -15,6 +15,9 @@ reqs = [str(ir.req) for ir in install_reqs]
 setup(version='0.1.0',
       name='concord_py_test',
       description='python client testing utilities',
+      depencency_links= [
+          'http://github.com/concord/concord-py/tarball/master#egg=concord-py-0.2.0'
+      ],
       author='concord systems',
       author_email='hi@concord.io',
       packages=find_packages(),

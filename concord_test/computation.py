@@ -90,8 +90,8 @@ def serve_test_computation(handler):
     node_id = tryGetEnv('integration_test_node_id')
 
 
-    handler.__concord = ZookeeperContext(zookeeper_url,
-                                         test_id,
-                                         node_id)
+    handler.concord = ZookeeperContext(zookeeper_url,
+                                       test_id,
+                                       node_id)
     logger.info("Defering further init: concord.computation.serve_computation")
     serve_computation(handler)

@@ -19,7 +19,7 @@ logger.setLevel(logging.DEBUG)
 
 class ConcordDecorator:
     def __init__(self, computation_name, zookeeper_url, test_id, node_id):
-        assert(metadat != None)
+        assert(computation_name != None)
         assert(zookeepr_url != None)
         assert(test_id != None)
         assert(node_id != None)

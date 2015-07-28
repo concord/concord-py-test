@@ -13,12 +13,8 @@ install_reqs = parse_requirements("requirements.txt",
 reqs = [str(ir.req) for ir in install_reqs]
 
 setup(version='0.1.0',
-      name='concord_py_test',
+      name='concord-py-test',
       description='python client testing utilities',
-      depencency_links= [
-          'https://github.com/concord/concord-py@1c16926cbd842f35f4103ce58b48d19e230cc0cb#egg=concord_py-master'
-
-      ],
       author='concord systems',
       author_email='hi@concord.io',
       packages=find_packages(),

@@ -20,10 +20,10 @@ logger.setLevel(logging.DEBUG)
 class ZookeeperContext:
 
     def __init__(self, computation_name, zookeeper_url, test_id, node_id):
-        assertNotNone(computation_name)
-        assertNotNone(zookeepr_url)
-        assertNotNone(test_id)
-        assertNotNone(node_id)
+        self.assertNotNone(computation_name)
+        self.assertNotNone(zookeepr_url)
+        self.assertNotNone(test_id)
+        self.assertNotNone(node_id)
 
         self.computation_name = computation_name
         self.zookeeper_url = zookeeper_url
@@ -56,8 +56,8 @@ class ZookeeperContext:
         self.zk.stop()
 
     def publish(self, key, data):
-        assertNotNone(key)
-        assertNotNone(data)
+        self.assertNotNone(key)
+        self.assertNotNone(data)
 
         path = self.zk_path + "/" + key
         logger.info("Creating data in: %s", path)

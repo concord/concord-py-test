@@ -1,4 +1,4 @@
-https://github.com/concord/concord-py/archive/v0.2.1.tar.gz
+http://github.com/concord/concord-py/archive/v0.2.1.tar.gz
 six==1.9.0
 thrift==0.9.2
 Twisted==14.0.2

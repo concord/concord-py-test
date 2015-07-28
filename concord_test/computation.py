@@ -61,7 +61,7 @@ class ConcordDecorator:
                 logger.info("Path does not exist in zk, creating... %s", path)
                 self.zk.create(path, makepath=True)
 
-            self.zk.set(path, value=data)
+            self.zk.set(path, value=picke.dumps(data))
         except Exception as exception:
             logger.error('Error setting data in ' % path)
             logger.fatal(exception)

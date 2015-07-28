@@ -32,7 +32,7 @@ class ZookeeperContext:
         logger.info("Initialized decorator: ", self)
         self.__connect_zookeeper()
 
-    def assertNotNone(thing):
+    def assertNotNone(self,thing):
         if thing == None:
             logger.fatal("Invalid key in initializer")
 
